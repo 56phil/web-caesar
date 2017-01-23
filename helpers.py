@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # date: 2016-11-25
 # copyright © Philip R. Huffman 2016 all rights reserved.
