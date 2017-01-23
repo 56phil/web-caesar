@@ -3,19 +3,14 @@ h1 {
   font-size:2rem;
 }
 
-.submit {
-  background:blue;
-  border-radius: 99%;
-  color:white;
-  display:block;
-  font-size:75%;
-  margin:1rem auto;
-  padding:1.3rem;
-  text-align:center;
-}
-
 body {
   background:blue;
+}
+
+label {
+  display:block;
+  font-family:cursive;
+  margin:1rem;
 }
 
 p {
@@ -31,6 +26,27 @@ p {
   top:44%;
   transform:translateY(-50%);
   width:44%;
+}
+
+.rot {
+  background:lightblue;
+  color:white;
+  display:block;
+  margin:1rem auto;
+  padding:0.3rem;
+  text-align:center;
+  width:4rem;
+}
+
+.submit {
+  background:blue;
+  border-radius: 99%;
+  color:white;
+  display:block;
+  font-size:75%;
+  margin:1rem auto;
+  padding:1.3rem;
+  text-align:center;
 }
 
 .ta {
