@@ -17,17 +17,39 @@
 # limitations under the License.
 #
 import webapp2
-import helpers
+import caesar
+
+
+def buildPage(stuff=""):
+    header = '<link type="text/css" rel="stylesheet" href="/static/css/normalize.css">'
+    header += '<link type="text/css" rel="stylesheet" href="/static/css/caesar.css">'
+    header += '<div class="container"><h1>Enter a message for Caesar.</h1>'
+    aForm = '<form method="POST"><label>Rotate by:</label>' + \
+            '<input name="rot" type="number" class="rot">'+ \
+            '<label>Enter text below:</label>' + \
+            '<textarea name="message" class="ta">' + stuff +\
+            '</textarea><input type="submit" class="submit"></form>'
+    content = header
+    content += aForm + '</div>'
+    return content
+
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        header = '<link type="text/css" rel="stylesheet" href="/static/css/normalize.css">'
-        header += '<link type="text/css" rel="stylesheet" href="/static/css/caesar.css">'
-        header += '<div class="container"><h1>Enter text for Caesar:</h1>'
-        aForm = '<form><textarea class="ta"></textarea><input type="submit" class="submit"></form>'
-        content = header
-        content += aForm + '</div>'
-        self.response.write(content)
+        self.response.write(buildPage())
+
+
+    def post(self):
+        plainText = self.request.get('message')
+        rot = self.request.get('rot')
+        try:
+            rot = int(rot)
+            encryptedText = caesar.encrypt(plainText, int(rot))
+        except ValueError:
+            encryptedText = 'Invalid rotation amount. ' + rot
+        self.response.write(buildPage(encryptedText))
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
