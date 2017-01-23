@@ -18,6 +18,7 @@
 #
 import webapp2
 import caesar
+from cgi import escape
 
 
 def buildPage(stuff=""):
@@ -45,7 +46,7 @@ class MainHandler(webapp2.RequestHandler):
         rot = self.request.get('rot')
         try:
             rot = int(rot)
-            encryptedText = caesar.encrypt(plainText, int(rot))
+            encryptedText = caesar.encrypt(escape(plainText), int(rot))
         except ValueError:
             encryptedText = 'Invalid rotation amount. ' + rot
         self.response.write(buildPage(encryptedText))
