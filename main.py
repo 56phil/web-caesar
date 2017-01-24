@@ -22,16 +22,23 @@ from cgi import escape
 
 
 def buildPage(stuff=""):
-    header = '<link type="text/css" rel="stylesheet" href="/static/css/normalize.css">'
+    # <!-- Latest compiled and minified CSS -->
+    header = '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'
+
+# <!-- Optional theme -->
+    header += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">'
+
+# <!-- Latest compiled and minified JavaScript -->
+    header += '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'
+    header += '<link type="text/css" rel="stylesheet" href="/static/css/normalize.css">'
     header += '<link type="text/css" rel="stylesheet" href="/static/css/caesar.css">'
-    header += '<div class="container"><h1>Enter a message for Caesar.</h1>'
-    aForm = '<form method="POST"><label>Rotate by:</label>' + \
-            '<input name="rot" type="number" class="rot">'+ \
-            '<label>Enter text below:</label>' + \
-            '<textarea name="message" class="ta">' + stuff +\
-            '</textarea><input type="submit" class="submit"></form>'
-    content = header
-    content += aForm + '</div>'
+    header += '<h1>Enter a message for Caesar.</h1><div class="container">'
+    aForm = '<form method="POST"><label for="rot">Rotate by:' + \
+            '<input name="rot" type="number" id="rot" class="rot"></label>'+ \
+            '<label for="ta">Enter text below:' + \
+            '<textarea name="message" id="ta" class="ta">' + stuff +\
+            '</textarea></label><input type="submit" class="submit" value="Encrypt"></input></form></div>'
+    content = header + aForm
     return content
 
 
@@ -54,4 +61,4 @@ class MainHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
-], debug=True)
+    ], debug=True)
