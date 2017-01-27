@@ -53,10 +53,10 @@ class MainHandler(webapp2.RequestHandler):
         rot = self.request.get('rot')
         try:
             rot = int(rot)
-            encryptedText = caesar.encrypt(escape(plainText), int(rot))
+            encryptedText = caesar.encrypt(plainText, rot)
         except ValueError:
             encryptedText = 'Invalid rotation amount. ' + rot
-        self.response.write(buildPage(encryptedText))
+        self.response.write(buildPage(escape(encryptedText)))
 
 
 app = webapp2.WSGIApplication([
