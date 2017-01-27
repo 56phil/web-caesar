@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""Creates a web page to encrypt plaintext using the Caesar cypher
+"""
 #
 # Copyright 2007 Google Inc.
 # copyright © Philip R. Huffman 2017 all rights reserved.
@@ -17,46 +19,69 @@
 # limitations under the License.
 #
 import webapp2
-import caesar
 from cgi import escape
+import caesar
 
 
-def buildPage(stuff=""):
+def build_page(stuff=""):
+    """builds the page
+    """
     # <!-- Latest compiled and minified CSS -->
-    header = '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'
+    header = """<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+    """
 
 # <!-- Optional theme -->
-    header += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">'
+    header += """ <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+    """
 
 # <!-- Latest compiled and minified JavaScript -->
-    header += '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'
+    header += """ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+    """
+
     header += '<link type="text/css" rel="stylesheet" href="/static/css/normalize.css">'
     header += '<link type="text/css" rel="stylesheet" href="/static/css/caesar.css">'
     header += '<h1>Enter a message for Caesar.</h1><div class="container">'
-    aForm = '<form method="POST"><label for="rot">Rotate by:' + \
-            '<input name="rot" type="number" id="rot" class="rot"></label>'+ \
-            '<label for="ta">Enter text below:' + \
-            '<textarea name="message" id="ta" class="ta">' + stuff +\
-            '</textarea></label><input type="submit" class="submit" value="Encrypt"></input></form></div>'
-    content = header + aForm
+
+    a_form = """<form method="POST"><label for="rot">Rotate by:
+        <input name="rot" type="number" id="rot" class="rot"></label>
+            <label for="ta">Enter text below:
+                <textarea name="message" id="ta" class="ta">"""
+    a_form += stuff
+    a_form += """</textarea></label><input type="submit" class="submit"
+    value="Encrypt"></input></form></div>"""
+    content = header + a_form
     return content
 
 
 
 class MainHandler(webapp2.RequestHandler):
+    """ Gets here via /
+    """
     def get(self):
-        self.response.write(buildPage())
+        """ inits page
+        """
+        self.response.write(build_page())
 
 
     def post(self):
-        plainText = self.request.get('message')
+        """ encrypts message
+        """
+        plain_text = self.request.get('message')
         rot = self.request.get('rot')
         try:
             rot = int(rot)
-            encryptedText = caesar.encrypt(plainText, rot)
+            encrypted_text = caesar.encrypt(plain_text, rot)
         except ValueError:
-            encryptedText = 'Invalid rotation amount. ' + rot
-        self.response.write(buildPage(escape(encryptedText)))
+            encrypted_text = 'Invalid rotation amount. ' + rot
+        self.response.write(build_page(escape(encrypted_text)))
 
 
 app = webapp2.WSGIApplication([
