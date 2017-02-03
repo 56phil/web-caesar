@@ -52,14 +52,12 @@ def build_page(stuff=""):
 
     a_form = """<form method="POST"><label for="rot">Rotate by:
         <input name="rot" type="number" id="rot" class="rot"></label>
-            <label for="ta">Enter text below:
-                <textarea name="message" id="ta" class="ta">"""
+            <label for="ta">Enter text below: <textarea name="message" id="ta" class="ta">"""
     a_form += stuff
     a_form += """</textarea></label><input type="submit" class="submit"
     value="Encrypt"></input></form></div>"""
     content = header + a_form
     return content
-
 
 
 class MainHandler(webapp2.RequestHandler):
